@@ -1,16 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import ProviderLogin from "./context/index";
 
 //Pages
-import Login from "./components/login/index";
+import Ways from "./routes/index";
 
 function App() {
+  
+  
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={ <Login /> } />
-      </Routes>
-    </Router>
+    <ProviderLogin>
+      <Ways/>
+    </ProviderLogin>
   )
 }
 
