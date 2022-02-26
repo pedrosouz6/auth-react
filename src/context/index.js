@@ -7,6 +7,7 @@ export default function LoginProvider ( { children } ) {
     const [ password, setPassword ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ auth, setAuth ] = useState(false);
+    const [ datas, setDatas ] = useState([]);
 
     return (
         <LoginContext.Provider value={{
@@ -15,7 +16,9 @@ export default function LoginProvider ( { children } ) {
             email: email,
             setEmail: setEmail,
             auth: auth,
-            setAuth: setAuth
+            setAuth: setAuth,
+            datas: datas,
+            setDatas: setDatas
         }}>
 
             {children}
@@ -26,6 +29,6 @@ export default function LoginProvider ( { children } ) {
 
 export function useLogin() {
     const context = useContext(LoginContext);
-    const { password, setPassword, email, setEmail, auth, setAuth } = context;
-    return { password, setPassword, email, setEmail, auth, setAuth };
+    const { password, setPassword, email, setEmail, auth, setAuth, setDatas, datas } = context;
+    return { password, setPassword, email, setEmail, auth, setAuth, setDatas, datas };
 }

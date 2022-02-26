@@ -1,56 +1,30 @@
 const express = require("express");
-//const cors = require("cors");
+const cors = require("cors");
 const app = express();
 
-//database
-//const { connect } = require("./connection/connect");
+const { connect } = require("./connection/connection");
 
-//Using the dependencies
-//app.use(cors());
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Producer
+app.post("/add/user", (req, res) => {
+    const { email, password } = req.body;
+    const sql = `INSERT INTO users (email, password) VALUES ('${email}', '${password}')`;
+    connect.query(sql, (error, results) => {
+        if(results){
+            console.log("Adicionado")
+        } 
+    })
+});
 
-//getting all database user
-app.get("/all/user/producer", (req, res) => {
-    const sql = "SELECT * FROM producer_user";
-    // connect.query(sql, (err, results) => {
-    //     res.send({data: results});
-    // })
-    res.send("Oi")
+app.get("/get/users", (req, res) => {
+    const sql = "SELECT * FROM users";
+    connect.query(sql, (error, results) => {
+        if(results){
+            res.send({ users: results });
+        }
+    })
 })
 
-//adding user in database 
-app.post("/add/user/producer", (req, res) => {
-    const { 
-        firstName, 
-        secondName,
-        email,
-        password,
-        state,
-        city,
-        district,
-        street,
-        number
-    } = req.body;
-
-    const sql = `INSERT INTO producer_user (pdc_first_name, pdc_second_name, pdc_email, pdc_password, pdc_state, pdc_city, pdc_district, pdc_street, pdc_number) VALUES ('${firstName}', '${secondName}', '${email}', '${password}', '${state}', '${city}', '${district}', '${street}', '${number}')`;
-
-    // connect.query(sql, (err, results) => {
-    //     if(results) res.send({message: "Seu cadastro foi adicionado com sucesso"});    
-    // })
-    
-    
-    //console.log(firstName, secondName, email, password, state, city, district, street, number);
-})
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//Consumer
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-app.listen(3333);
+app.listen(4000);
