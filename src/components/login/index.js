@@ -6,7 +6,8 @@ import Axios from "axios";
 
 export default function Login () {
 
-    const { email, setEmail, password, setPassword, setDatas, datas } = useLogin();
+    const { email, setEmail, password, setPassword, setDatas, datas, setAuth } = useLogin();
+    const navigate = useNavigate();
     
     function sendInfo (e) {
         e.preventDefault();
@@ -14,8 +15,12 @@ export default function Login () {
         if(email && password) {
             datas.map(item => {
                 if(item.email == `${email}` && item.password == `${password}`) {
-                    console.log("logado")
-                } 
+                    navigate("/dashboard");
+                    localStorage.setItem("user", "true");
+                    setAuth(true);
+                } else {
+                    setAuth(false);
+                }
             })
             
         } else {
