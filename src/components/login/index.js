@@ -1,24 +1,33 @@
-import { useNavigate } from "react-router";
 import { Section } from "./style";
 import { useLogin } from "../../context/index";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Axios from "axios";
 
 export default function Login () {
 
-    const { email, setEmail, password, setPassword, setDatas, datas, setAuth } = useLogin();
+    const { email, setEmail, password, setPassword, datas, setAuth} = useLogin();
     const navigate = useNavigate();
-    
+
     function sendInfo (e) {
         e.preventDefault();
 
         if(email && password) {
             datas.map(item => {
                 if(item.email == `${email}` && item.password == `${password}`) {
-                    navigate("/dashboard");
-                    localStorage.setItem("user", "true");
+
+                    const user = {
+                        email,
+                        password
+                    };
+
+                    localStorage.setItem("user", JSON.stringify(user));
+                    console.log(datas)
                     setAuth(true);
+                    navigate("/dashboard");
+
                 } else {
+                    console.log("erro")
                     setAuth(false);
                 }
             })
@@ -29,9 +38,20 @@ export default function Login () {
     }
 
     useEffect(() => {
-        Axios.get("http://localhost:4000/get/users")
-        .then(response => setDatas(response.data.users))
-    }, []);
+        const authLocal = localStorage.getItem("user") || null;
+
+        if(authLocal) {
+
+            const { email, password } = JSON.parse(authLocal);
+
+            if(email == "pedro") {
+                setAuth(true);
+                //navigate("/dashboard");
+            }
+        }
+        
+        
+    }, [])
 
     return (
         <Section>

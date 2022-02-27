@@ -1,14 +1,11 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "../components/login/index";
 import Dashboard from "../components/dashboard/index";
 import { useLogin } from "../context/index";
-import { useEffect } from "react";
 
 export default function WayRoutes () {
-    const { auth, setAuth } = useLogin();
-    const login = localStorage.getItem("user") || false;
-    const navigate = useNavigate();
+    const { auth } = useLogin();
     
     function Private ({ children }) {
         if(auth === false) {
@@ -16,12 +13,6 @@ export default function WayRoutes () {
         } 
         return children;
     }
-    
-    useEffect(() => {
-        if(!login) {
-           navigate("/da");
-        }
-    }, [])
 
     return (
         <Router>

@@ -22,7 +22,7 @@ app.get("/get/users", (req, res) => {
     const sql = "SELECT * FROM users";
     connect.query(sql, (error, results) => {
         if(results){
-            res.send({ users: results });
+            res.send({ results });
         }
     })
 })

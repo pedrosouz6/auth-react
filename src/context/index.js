@@ -1,13 +1,23 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import Axios from "axios";
 
 const LoginContext = createContext();
 
-export default function LoginProvider ( { children } ) {
+export default function LoginProvider ({ children }) {
 
     const [ password, setPassword ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ auth, setAuth ] = useState(false);
     const [ datas, setDatas ] = useState([]);
+    const [ loading, setLoading ] = useState(true);
+
+    useEffect(() => {
+        Axios.get("http://localhost:4000/get/users")
+        .then(response => setDatas(response.data.results));
+
+        setLoading(false);
+    }, []);
+
 
     return (
         <LoginContext.Provider value={{
@@ -18,10 +28,10 @@ export default function LoginProvider ( { children } ) {
             auth: auth,
             setAuth: setAuth,
             datas: datas,
-            setDatas: setDatas
+            setDatas: setDatas,
         }}>
 
-            {children}
+            {!loading && children}
 
         </LoginContext.Provider>
     )
