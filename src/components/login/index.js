@@ -1,16 +1,21 @@
+//Style
 import { Section } from "./style";
-import { useLogin } from "../../context/index";
+
+//Hooks
+import { useState } from "react";
+import { useAuth } from "../../Context/auth";
+
 
 export default function Login () {
 
-    const { email, setEmail, password, setPassword, login } = useLogin();
+    const { validate, validation } = useAuth();
 
-    function sendInfo (e) {
+    const [ email, setEmail ] = useState("");
+    const [ password, setPassword ] = useState("");
+
+    const sendInfo = (e) => {
         e.preventDefault();
-
-        if(email && password) {
-            login();
-        }
+        validate(email, password);
     }
 
     return (
@@ -18,8 +23,18 @@ export default function Login () {
             <div className="container">
                 <h1>Login</h1>
                 <form onSubmit={sendInfo}>
-                    <input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                    <input type="text" placeholder="Senha" onChange={(e) => setPassword(e.target.value)} />
+
+                    <input type="text" 
+                    placeholder="Email" 
+                    onChange={(e) => setEmail(e.target.value)} />
+
+                    <input type="text" 
+                    placeholder="Senha" 
+                    onChange={(e) => setPassword(e.target.value)} />
+
+                    {/* validate message */}  
+                    {validation && (<p> Preencha o(s) campo(s) acima </p>)}
+
                     <input type="submit" value="Enviar"  />
                 </form>
             </div>

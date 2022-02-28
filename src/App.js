@@ -1,11 +1,7 @@
+import Routes from "./routes";
 
-//Pages
-import Ways from "./routes/index";
-
-function App() {
+export default function App() {
   return (
-      <Ways/>
+      <Routes />
   )
 }
-
-export default App;

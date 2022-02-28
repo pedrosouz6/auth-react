@@ -55,4 +55,9 @@ export const Section = Style.section `
     input:last-child:hover {
         background: rgba(14, 90, 231, .9);
     }
+
+    p {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
 `

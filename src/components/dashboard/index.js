@@ -1,19 +1,18 @@
-import { useNavigate } from "react-router";
 import { Section } from "./style";
+import { useAuth } from "../../Context/auth";
 
 export default function Dashboard() {
 
-    const navigate = useNavigate();
+    const { signIn } = useAuth();
 
-    function removeLocal() {
-        localStorage.removeItem("user");
-        navigate("/");
+    const remove = () => {
+        signIn();
     }
 
     return (
         <Section>
             <h1>Dashboard</h1>
-            <button onClick={removeLocal}>Sing out</button>
+            <button onClick={remove}>Sing out</button>
         </Section>
     )
 }
